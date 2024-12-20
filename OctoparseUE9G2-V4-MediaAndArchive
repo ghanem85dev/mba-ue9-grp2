@@ -1,0 +1,177 @@
+{
+  "tasks": [
+    {
+      "type": "LoopItem",
+      "loopList": [
+        https://www.bbc.com
+        https://www.theguardian.com
+        https://www.reuters.com
+        https://www.nytimes.com
+        https://www.washingtonpost.com
+        https://www.statnews.com
+        https://www.fiercepharma.com
+        https://www.sciencenews.org
+        https://www.rt.com
+        https://www.zerohedge.com
+        https://www.infowars.com
+        https://www.naturalnews.com
+        https://rumble.com
+        https://www.bitchute.com
+        https://odysee.com
+        https://healthunlocked.com
+        https://patient.info
+        https://www.abovetopsecret.com
+        https://www.godlikeproductions.com
+        https://thevaccinereaction.org
+        https://www.mercola.com
+        https://pubmed.ncbi.nlm.nih.gov
+        https://www.researchgate.net
+        https://thetruthaboutcancer.com
+        https://thehighwire.com
+        https://draxe.com
+        https://open.spotify.com/show/4rOoJ6Egrf8K2IrywzwOMk
+        https://www.parcast.com/conspiracy
+        https://archive.org
+        https://archive.is
+      ],
+      "children": [
+        {
+          "type": "LoadUrl",
+          "description": "Charger chaque source"
+        },
+        {
+          "type": "ClickItem",
+          "selector": "button:contains('Accept All'), button[data-testid='accept-all'], .cookie-banner-accept",
+          "description": "Accepter les cookies automatiquement"
+        },
+        {
+          "type": "LoopItem",
+          "loopSelector": ".Post, article, .entry, #video-title",
+          "children": [
+            {
+              "type": "ExtractData",
+              "selector": "h3, h1, #video-title",
+              "name": "Titre"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "p, div[data-click-id='text'], .content, .metadata-snippet-container",
+              "name": "Corps"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "a[href]",
+              "name": "URL",
+              "attribute": "href"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "img",
+              "name": "PhotoURL",
+              "attribute": "src"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "a[data-click-id='media'], video",
+              "name": "VideoURL",
+              "attribute": "href"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "meta[name='author'], span.author, .ytd-channel-name",
+              "name": "Auteur",
+              "attribute": "content"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "time, span.date",
+              "name": "DatePublication",
+              "attribute": "datetime"
+            },
+            {
+              "type": "ExtractData",
+              "selector": ".tag, .category, .badge-style-type-simple",
+              "name": "Tags"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "div.comment-count, span[data-testid='comment_count']",
+              "name": "Commentaires"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "span[data-click-id='shares'], .share-count",
+              "name": "Shares"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "span.score, .likes",
+              "name": "Likes"
+            },
+            {
+              "type": "ParseContent",
+              "selector": "p, div[data-click-id='text'], .content",
+              "name": "ExtractedURLs",
+              "parse": {
+                "pattern": "https?://[\\w\\.\\-/]+",
+                "replacement": "\\0"
+              }
+            },
+            {
+              "type": "Filter",
+              "condition": {
+                "containsAny": [
+                  "conspiracy",
+                  "antiVaccine",
+                  "antivax",
+                  "covid",
+                  "virus",
+                  "health",
+                  "bigPharma",
+                  "neuralink",
+                  "VIH",
+                  "Sida",
+                  "organTrafficking",
+                  "medicalMalpractice",
+                  "StopVaccination",
+                  "coronavirus",
+                  "pandemic",
+                  "vaccines",
+                  "side effects",
+                  "WHO",
+                  "CDC",
+                  "lockdown",
+                  "quarantine",
+                  "5G",
+                  "Bill Gates",
+                  "population control",
+                  "microchip",
+                  "plandemic",
+                  "herd immunity",
+                  "mask mandate",
+                  "immune system",
+                  "mRNA",
+                  "gene therapy",
+                  "bioweapon"
+                ]
+              },
+              "target": [
+                "Titre",
+                "Corps",
+                "Tags"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ClickItem",
+          "selector": "a[rel='nofollow next'], .pagination-next",
+          "description": "Pagination"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "format": "csv"
+  }
+}
