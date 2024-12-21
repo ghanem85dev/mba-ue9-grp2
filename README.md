@@ -8,7 +8,7 @@
 
 3. Bonnes pratiques :
 - Toujours respecter les règles des plateformes.
-- Utiliser des outils comme Octoparse pour automatiser (creation des templates)
+- Utiliser des templates (custom) Octoparse pour automatiser
 - Prioriser des filtres KPI pour des données plus pertinentes.
 
 4. Recommandations pour L'UK NHS
