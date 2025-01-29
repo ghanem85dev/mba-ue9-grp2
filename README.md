@@ -1,4 +1,4 @@
-# Guide de Scraping des Données – Équipes Data Scientists de l’ADEME
+# Guide de Scraping des Données 
 
 ## Problèmes Rencontrés
 
