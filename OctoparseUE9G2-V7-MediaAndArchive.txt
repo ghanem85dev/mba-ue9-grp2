@@ -1,0 +1,79 @@
+{
+  "taskName": "Media Articles Scraper",
+  "startUrls": [
+    https://www.reuters.com/news/archive/healthNews
+    https://www.cnn.com/health
+    https://www.nytimes.com/section/health
+    https://www.who.int/news-room
+    https://www.cdc.gov/media/index.html
+  ],
+  "workflow": [
+    {
+      "action": "GoToWebPage",
+      "url": " https://www.reuters.com/news/archive/healthNews"
+    },
+    {
+      "action": "WaitForElement",
+      "selector": "//div[@class='article-list']",
+      "timeout": 10
+    },
+    {
+      "action": "Loop",
+      "loopType": "Pagination",
+      "paginationSelector": "//a[@class='next-page']",
+      "actions": [
+        {
+          "action": "ExtractData",
+          "fields": [
+            {
+              "name": "Title",
+              "selector": "//h1[@class='article-title']"
+            },
+            {
+              "name": "URL",
+              "selector": "//a[@class='article-link']/@href"
+            },
+            {
+              "name": "Date",
+              "selector": "//time[@class='article-date']"
+            },
+            {
+              "name": "Author",
+              "selector": "//span[@class='article-author']"
+            },
+            {
+              "name": "Content",
+              "selector": "//div[@class='article-content']"
+            }
+          ]
+        },
+        {
+          "action": "Filter",
+          "condition": "ContainsAny",
+          "keywords": [
+            "conspiracy", "conspiracies", "complot", "complotisme",
+            "pandemic", "pandémie", "pandemi",
+            "antiVaccine", "anti-vax", "antivax", "antiVaccin", "anti-vaccin", "antivaccin",
+            "bigPharma", "big Pharma", "grandePharma", "grande Pharma",
+            "coronavirus", "covid", "covid-19", "corona",
+            "lockdown", "confinement",
+            "immune system", "système immunitaire",
+            "public health", "santé publique",
+            "mRNA", "ARNm",
+            "population control", "contrôle de la population",
+            "plandemic", "plandémie",
+            "bioweapon", "arme biologique",
+            "gene therapy", "thérapie génique",
+            "side effects", "effets secondaires",
+            "health risks", "risques pour la santé"
+          ],
+          "field": "Content"
+        }
+      ]
+    }
+  ],
+  "exportSettings": {
+    "format": "CSV",
+    "fileName": "media_articles"
+  }
+}

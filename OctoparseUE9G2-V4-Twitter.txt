@@ -1,0 +1,61 @@
+{
+  "taskName": "Twitter Keyword Parsing",
+  "description": "Extract tweets containing specific keywords.",
+  "workflow": {
+    "steps": [
+      {
+        "stepType": "NavigateTo",
+        "url": "https://twitter.com/search?q=conspiracy%20OR%20conspiracies%20OR%20complot%20OR%20complotisme%20OR%20pandemic%20OR%20pandémie%20OR%20pandemi%20OR%20antiVaccine%20OR%20anti-vax%20OR%20antivax%20OR%20antiVaccin%20OR%20anti-vaccin%20OR%20antivaccin%20OR%20bigPharma%20OR%20big%20Pharma%20OR%20grandePharma%20OR%20grande%20Pharma%20OR%20coronavirus%20OR%20covid%20OR%20covid-19%20OR%20corona%20OR%20lockdown%20OR%20confinement%20OR%20immune%20system%20OR%20système%20immunitaire%20OR%20public%20health%20OR%20santé%20publique%20OR%20mRNA%20OR%20ARNm%20OR%20population%20control%20OR%20contrôle%20de%20la%20population%20OR%20plandemic%20OR%20plandémie%20OR%20bioweapon%20OR%20arme%20biologique%20OR%20gene%20therapy%20OR%20thérapie%20génétique%20OR%20side%20effects%20OR%20effets%20secondaires%20OR%20health%20risks%20OR%20risques%20pour%20la%20santé&src=typed_query",
+        "actionName": "SearchKeywords"
+      },
+      {
+        "stepType": "LoopItem",
+        "actionName": "ExtractTweets",
+        "loopConfig": {
+          "loopType": "Pagination",
+          "paginationAction": {
+            "type": "ScrollDown",
+            "repeatCount": 5
+          }
+        },
+        "extractFields": [
+          {
+            "fieldName": "Username",
+            "fieldSelector": "span.css-username-class"
+          },
+          {
+            "fieldName": "TweetContent",
+            "fieldSelector": "div.css-tweet-content-class"
+          },
+          {
+            "fieldName": "Timestamp",
+            "fieldSelector": "time.css-timestamp-class"
+          },
+          {
+            "fieldName": "Retweets",
+            "fieldSelector": "span.css-retweets-class"
+          },
+          {
+            "fieldName": "Likes",
+            "fieldSelector": "span.css-likes-class"
+          }
+        ]
+      }
+    ]
+  },
+  "output": {
+    "format": "CSV",
+    "fields": [
+      "Username",
+      "TweetContent",
+      "Timestamp",
+      "Retweets",
+      "Likes"
+    ]
+  },
+  "settings": {
+    "proxy": "auto",
+    "delay": 2000,
+    "userAgent": "default"
+  }
+}

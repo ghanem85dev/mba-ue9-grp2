@@ -1,0 +1,177 @@
+{
+  "tasks": [
+    {
+      "type": "LoopItem",
+      "loopList": [
+        https://www.reddit.com/r/conspiracy/
+        https://www.reddit.com/r/antiVaccine/
+        https://www.reddit.com/r/antivax/
+        https://www.reddit.com/r/covid/
+        https://www.reddit.com/r/virus/
+        https://www.reddit.com/r/health/
+        https://www.reddit.com/r/technology/
+        https://www.reddit.com/r/bigPharma/
+        https://www.reddit.com/r/neuralink/
+        https://www.reddit.com/r/vih/
+        https://www.reddit.com/r/sida/
+        https://www.reddit.com/r/organTrafficking/
+        https://www.reddit.com/r/medicalMalpractice/
+        https://www.reddit.com/r/StopVaccination/
+        https://www.reddit.com/r/coronavirus/
+        https://www.reddit.com/r/medicine/
+        https://www.reddit.com/r/science/
+        https://www.reddit.com/r/TrueReddit/
+        https://www.reddit.com/r/OutOfTheLoop/
+        https://www.reddit.com/r/debatevaccines/
+        https://www.reddit.com/r/Collapse/
+        https://www.reddit.com/r/HumanRights/
+        https://www.reddit.com/r/Privacy/
+        https://www.reddit.com/r/Futurology/
+        https://www.reddit.com/r/AskScience/
+        https://www.reddit.com/r/NoNewNormal/
+        https://www.reddit.com/r/EverythingScience/
+        https://www.reddit.com/r/Skeptic/
+        https://www.reddit.com/r/WTFScience/
+        https://www.reddit.com/r/explainlikeimfive/
+      ],
+      "children": [
+        {
+          "type": "LoadUrl",
+          "description": "Charger chaque source"
+        },
+        {
+          "type": "ClickItem",
+          "selector": "button:contains('Accept All'), button[data-testid='accept-all'], .cookie-banner-accept",
+          "description": "Accepter les cookies automatiquement"
+        },
+        {
+          "type": "LoopItem",
+          "loopSelector": ".Post, article, .entry, #video-title",
+          "children": [
+            {
+              "type": "ExtractData",
+              "selector": "h3, h1, #video-title",
+              "name": "Titre"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "p, div[data-click-id='text'], .content, .metadata-snippet-container",
+              "name": "Corps"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "a[href]",
+              "name": "URL",
+              "attribute": "href"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "img",
+              "name": "PhotoURL",
+              "attribute": "src"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "a[data-click-id='media'], video",
+              "name": "VideoURL",
+              "attribute": "href"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "meta[name='author'], span.author, .ytd-channel-name",
+              "name": "Auteur",
+              "attribute": "content"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "time, span.date",
+              "name": "DatePublication",
+              "attribute": "datetime"
+            },
+            {
+              "type": "ExtractData",
+              "selector": ".tag, .category, .badge-style-type-simple",
+              "name": "Tags"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "div.comment-count, span[data-testid='comment_count']",
+              "name": "Commentaires"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "span[data-click-id='shares'], .share-count",
+              "name": "Shares"
+            },
+            {
+              "type": "ExtractData",
+              "selector": "span.score, .likes",
+              "name": "Likes"
+            },
+            {
+              "type": "ParseContent",
+              "selector": "p, div[data-click-id='text'], .content",
+              "name": "ExtractedURLs",
+              "parse": {
+                "pattern": "https?://[\\w\\.\\-/]+",
+                "replacement": "\\0"
+              }
+            },
+            {
+              "type": "Filter",
+              "condition": {
+                "containsAny": [
+                  "conspiracy",
+                  "antiVaccine",
+                  "antivax",
+                  "covid",
+                  "virus",
+                  "health",
+                  "bigPharma",
+                  "neuralink",
+                  "VIH",
+                  "Sida",
+                  "organTrafficking",
+                  "medicalMalpractice",
+                  "StopVaccination",
+                  "coronavirus",
+                  "pandemic",
+                  "vaccines",
+                  "side effects",
+                  "WHO",
+                  "CDC",
+                  "lockdown",
+                  "quarantine",
+                  "5G",
+                  "Bill Gates",
+                  "population control",
+                  "microchip",
+                  "plandemic",
+                  "herd immunity",
+                  "mask mandate",
+                  "immune system",
+                  "mRNA",
+                  "gene therapy",
+                  "bioweapon"
+                ]
+              },
+              "target": [
+                "Titre",
+                "Corps",
+                "Tags"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ClickItem",
+          "selector": "a[rel='nofollow next'], .pagination-next",
+          "description": "Pagination"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "format": "csv"
+  }
+}
